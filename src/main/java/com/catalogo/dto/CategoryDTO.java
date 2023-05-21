@@ -2,6 +2,8 @@ package com.catalogo.dto;
 
 import com.catalogo.entities.Category;
 
+import java.util.Optional;
+
 public class CategoryDTO {
     private Long id;
     private String nome;

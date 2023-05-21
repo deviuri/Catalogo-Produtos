@@ -1,7 +1,6 @@
 package com.catalogo.resouces;
 
 import com.catalogo.dto.CategoryDTO;
-import com.catalogo.entities.Category;
 import com.catalogo.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +28,8 @@ public class CategoryResouce {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Category>> buscarPorId(@PathVariable Long id){
-        Optional<Category> category = service.buscarPorId(id);
+    public ResponseEntity<CategoryDTO> buscarPorId(@PathVariable Long id){
+        CategoryDTO category = service.buscarPorId(id);
 
         return ResponseEntity.ok().body(category);
     }

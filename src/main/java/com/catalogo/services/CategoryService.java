@@ -1,8 +1,10 @@
 package com.catalogo.services;
 
+import com.catalogo.Infra.TratadorDeErros;
 import com.catalogo.dto.CategoryDTO;
 import com.catalogo.entities.Category;
 import com.catalogo.repository.CategoryRepository;
+import com.catalogo.resouces.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +28,11 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Category> buscarPorId(Long id){
-        return repository.findById(id);
+    public CategoryDTO buscarPorId(Long id){
+        Optional<Category> ct = repository.findById(id);
+        Category category = ct.orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
+
+        return new CategoryDTO(category);
     }
 
 
