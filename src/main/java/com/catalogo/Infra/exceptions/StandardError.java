@@ -1,4 +1,4 @@
-package com.catalogo.services.exceptions;
+package com.catalogo.Infra.exceptions;
 
 import java.time.Instant;
 
@@ -29,7 +29,7 @@ public class StandardError {
         this.status = status;
     }
 
-    public String getError(String nãoEncontrado) {
+    public String getError() {
         return error;
     }
 

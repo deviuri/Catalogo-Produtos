@@ -3,7 +3,7 @@ package com.catalogo.services;
 import com.catalogo.dto.CategoryDTO;
 import com.catalogo.entities.Category;
 import com.catalogo.repository.CategoryRepository;
-import com.catalogo.services.exceptions.EntityNotFoundException;
+import com.catalogo.Infra.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +34,26 @@ public class CategoryService {
         return new CategoryDTO(category);
     }
 
+    @Transactional
     public Category cadastrarCategory(CategoryDTO dto){
         Category category = new Category(dto);
 
         return repository.save(category);
+    }
+
+    @Transactional
+    public void deletarCategory(Long id){
+        Category category = repository.findById(id).get();
+
+        repository.delete(category);
+    }
+
+    @Transactional
+    public CategoryDTO editarCategory(Long id, CategoryDTO dto){
+        Category category = repository.findById(id).get();
+        category.setNome(dto.getNome());
+
+        return new CategoryDTO(category);
     }
 
 

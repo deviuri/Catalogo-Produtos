@@ -1,8 +1,8 @@
 package com.catalogo.Infra;
 
 
-import com.catalogo.services.exceptions.EntityNotFoundException;
-import com.catalogo.services.exceptions.StandardError;
+import com.catalogo.Infra.exceptions.EntityNotFoundException;
+import com.catalogo.Infra.exceptions.StandardError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

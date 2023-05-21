@@ -1,4 +1,4 @@
-package com.catalogo.services.exceptions;
+package com.catalogo.Infra.exceptions;
 
 public class EntityNotFoundException extends RuntimeException{
     public EntityNotFoundException(String message) {
