@@ -3,6 +3,7 @@ package com.catalogo.entities;
 import com.catalogo.dto.CategoryDTO;
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +13,9 @@ public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant created_At;
 
     public Category(){
     }
@@ -54,5 +58,11 @@ public class Category {
         this.nome = nome;
     }
 
+    public Instant getCreated_At() {
+        return created_At;
+    }
 
+    public void setCreated_At(Instant created_At) {
+        this.created_At = created_At;
+    }
 }

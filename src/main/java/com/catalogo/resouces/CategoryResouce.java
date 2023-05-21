@@ -1,17 +1,16 @@
 package com.catalogo.resouces;
 
 import com.catalogo.dto.CategoryDTO;
-import com.catalogo.entities.Category;
 import com.catalogo.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.io.LineNumberReader;
-import java.util.List;
 
 
 @RestController
@@ -22,15 +21,22 @@ public class CategoryResouce {
     private CategoryService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> buscar(){
+    public ResponseEntity<Page<CategoryDTO>> buscar(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction
+    ) {
 
-        var list = service.findAll();
+        var pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+
+        var list = service.findAllPage(pageRequest);
 
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<CategoryDTO> buscarPorId(@PathVariable Long id) {
         var category = service.buscarPorId(id);
 
         return ResponseEntity.ok().body(category);
@@ -38,7 +44,7 @@ public class CategoryResouce {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<CategoryDTO> cadastrarCategoria(@RequestBody @Valid CategoryDTO dto, UriComponentsBuilder builder){
+    public ResponseEntity<CategoryDTO> cadastrarCategoria(@RequestBody @Valid CategoryDTO dto, UriComponentsBuilder builder) {
 
         var category = service.cadastrarCategory(dto);
 
@@ -50,14 +56,15 @@ public class CategoryResouce {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deletarCategoria(@PathVariable Long id){
+    public ResponseEntity<Void> deletarCategoria(@PathVariable Long id) {
         service.deletarCategory(id);
 
         return ResponseEntity.noContent().build();
     }
+
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<CategoryDTO> deletarCategoria(@PathVariable Long id, @RequestBody @Valid CategoryDTO dto){
+    public ResponseEntity<CategoryDTO> deletarCategoria(@PathVariable Long id, @RequestBody @Valid CategoryDTO dto) {
         var category = service.editarCategory(id, dto);
 
         return ResponseEntity.ok().body(category);

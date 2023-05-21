@@ -1,7 +1,8 @@
 package com.catalogo.Infra;
 
 
-import com.catalogo.Infra.exceptions.EntityNotFoundException;
+import com.catalogo.Infra.exceptions.DatabaseException;
+import com.catalogo.Infra.exceptions.ResourceNotFoundException;
 import com.catalogo.Infra.exceptions.StandardError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,9 @@ import java.time.Instant;
 @ControllerAdvice
 public class TratadorDeErros{
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<StandardError> error404(
-            EntityNotFoundException e, HttpServletRequest http){
+            ResourceNotFoundException e, HttpServletRequest http){
 
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
@@ -26,6 +27,20 @@ public class TratadorDeErros{
         error.setPath(http.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> dataBase(
+            DatabaseException e, HttpServletRequest http){
+
+        StandardError error = new StandardError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setError("Problema com Database");
+        error.setMessage(e.getMessage());
+        error.setPath(http.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
 }
