@@ -1,5 +1,6 @@
 package com.catalogo.entities;
 
+import com.catalogo.dto.CategoryDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -19,6 +20,10 @@ public class Category {
     public Category(Long id, String nome){
         this.id = id;
         this.nome = nome;
+    }
+
+    public Category(CategoryDTO dto) {
+        this.nome = dto.getNome();
     }
 
     @Override

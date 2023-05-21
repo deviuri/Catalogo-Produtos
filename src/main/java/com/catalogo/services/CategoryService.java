@@ -1,10 +1,9 @@
 package com.catalogo.services;
 
-import com.catalogo.Infra.TratadorDeErros;
 import com.catalogo.dto.CategoryDTO;
 import com.catalogo.entities.Category;
 import com.catalogo.repository.CategoryRepository;
-import com.catalogo.resouces.exceptions.EntityNotFoundException;
+import com.catalogo.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +32,12 @@ public class CategoryService {
         Category category = ct.orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
 
         return new CategoryDTO(category);
+    }
+
+    public Category cadastrarCategory(CategoryDTO dto){
+        Category category = new Category(dto);
+
+        return repository.save(category);
     }
 
 

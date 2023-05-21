@@ -1,4 +1,4 @@
-package com.catalogo.resouces.exceptions;
+package com.catalogo.services.exceptions;
 
 import java.time.Instant;
 
