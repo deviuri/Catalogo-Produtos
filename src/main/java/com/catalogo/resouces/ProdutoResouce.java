@@ -30,16 +30,16 @@ public class ProdutoResouce {
             @RequestParam(value = "direction", defaultValue = "ASC") String direction
     ) {
 
-        var pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
-        var list = service.findAllPage(pageRequest);
+        Page<ProdutoDTO> list = service.findAllPage(pageRequest);
 
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoDTO> buscarPorId(@PathVariable Long id) {
-        var Produto = service.buscarPorId(id);
+        ProdutoDTO Produto = service.buscarPorId(id);
 
         return ResponseEntity.ok().body(Produto);
     }
