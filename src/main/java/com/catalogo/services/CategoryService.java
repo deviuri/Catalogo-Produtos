@@ -42,10 +42,12 @@ public class CategoryService {
     }
 
     @Transactional
-    public Category cadastrarCategory(CategoryDTO dto) {
-        Category category = new Category(dto);
+    public CategoryDTO cadastrarCategory(CategoryDTO dto) {
+        Category category = new Category();
+        category.setNome(dto.getNome());
+        category = repository.save(category);
 
-        return repository.save(category);
+        return new CategoryDTO(category);
     }
 
     @Transactional

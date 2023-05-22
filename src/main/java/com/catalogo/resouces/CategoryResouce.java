@@ -46,12 +46,12 @@ public class CategoryResouce {
     @Transactional
     public ResponseEntity<CategoryDTO> cadastrarCategoria(@RequestBody @Valid CategoryDTO dto, UriComponentsBuilder builder) {
 
-        var category = service.cadastrarCategory(dto);
+        dto = service.cadastrarCategory(dto);
 
         var uri = builder.path("/categories/{id}")
-                .buildAndExpand(category.getId()).toUri();
+                .buildAndExpand(dto.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new CategoryDTO(category));
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @DeleteMapping("/{id}")
