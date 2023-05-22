@@ -46,12 +46,12 @@ public class ProdutoResouce {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody ProdutoDTO dto, UriComponentsBuilder uriBuilder) {
-        dto = service.cadastrarProduto(dto);
+    public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody ProdutoDTO produtoDTO, UriComponentsBuilder uriBuilder) {
+        produtoDTO = service.cadastrarProduto(produtoDTO);
         URI uri = uriBuilder.path("/produtos/{id}")
-                .buildAndExpand(dto.getId()).toUri();
+                .buildAndExpand(produtoDTO.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.created(uri).body(produtoDTO);
     }
     @PutMapping("/{id}")
     @Transactional
