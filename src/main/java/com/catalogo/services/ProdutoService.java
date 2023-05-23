@@ -45,13 +45,7 @@ public class ProdutoService {
         return new ProdutoDTO(produto, produto.getCategorias());
     }
 
-    @Transactional
-    public ProdutoDTO cadastrarProduto(ProdutoDTO dto) {
-        Produto entity = new Produto();
-        copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        return new ProdutoDTO(entity, entity.getCategorias());
-    }
+
 
     @Transactional
     public void deletarProduto(Long id) {
@@ -64,7 +58,13 @@ public class ProdutoService {
             throw new DatabaseException("Produto não existe em nosso Banco de Dados");
         }
     }
-
+    @Transactional
+    public ProdutoDTO cadastrarProduto(ProdutoDTO dto) {
+        Produto entity = new Produto();
+        copyDtoToEntity(dto, entity);
+        entity = repository.save(entity);
+        return new ProdutoDTO(entity, entity.getCategorias());
+    }
     @Transactional
     public ProdutoDTO editarProduto(Long id, ProdutoDTO dto) {
         try {

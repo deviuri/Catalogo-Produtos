@@ -37,6 +37,7 @@ public class ProdutoResouce {
         return ResponseEntity.ok().body(list);
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoDTO> buscarPorId(@PathVariable Long id) {
         ProdutoDTO Produto = service.buscarPorId(id);

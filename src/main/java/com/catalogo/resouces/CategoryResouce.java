@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+
 
 @RestController
 @RequestMapping("/categories")
@@ -28,16 +30,16 @@ public class CategoryResouce {
             @RequestParam(value = "direction", defaultValue = "ASC") String direction
     ) {
 
-        var pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
-        var list = service.findAllPage(pageRequest);
+        Page<CategoryDTO> list = service.findAllPage(pageRequest);
 
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDTO> buscarPorId(@PathVariable Long id) {
-        var category = service.buscarPorId(id);
+        CategoryDTO category = service.buscarPorId(id);
 
         return ResponseEntity.ok().body(category);
     }
@@ -48,7 +50,7 @@ public class CategoryResouce {
 
         dto = service.cadastrarCategory(dto);
 
-        var uri = builder.path("/categories/{id}")
+        URI uri = builder.path("/categories/{id}")
                 .buildAndExpand(dto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);
@@ -65,7 +67,7 @@ public class CategoryResouce {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<CategoryDTO> deletarCategoria(@PathVariable Long id, @RequestBody @Valid CategoryDTO dto) {
-        var category = service.editarCategory(id, dto);
+        CategoryDTO category = service.editarCategory(id, dto);
 
         return ResponseEntity.ok().body(category);
     }
