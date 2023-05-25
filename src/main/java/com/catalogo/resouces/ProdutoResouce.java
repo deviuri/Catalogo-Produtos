@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +24,8 @@ public class ProdutoResouce {
     private ProdutoService service;
 
     @GetMapping
-    public ResponseEntity<Page<ProdutoDTO>> buscar(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction
-    ) {
-
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-
-        Page<ProdutoDTO> list = service.findAllPage(pageRequest);
+    public ResponseEntity<Page<ProdutoDTO>> buscar(Pageable paginacao) {
+        Page<ProdutoDTO> list = service.findAllPage(paginacao);
 
         return ResponseEntity.ok().body(list);
     }

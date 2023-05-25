@@ -5,34 +5,24 @@ import com.catalogo.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.net.URI;
 
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/categorias")
 public class CategoryResouce {
 
     @Autowired
     private CategoryService service;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> buscar(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction
-    ) {
-
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-
-        Page<CategoryDTO> list = service.findAllPage(pageRequest);
+    public ResponseEntity<Page<CategoryDTO>> buscar(Pageable paginacao) {
+        Page<CategoryDTO> list = service.findAllPage(paginacao);
 
         return ResponseEntity.ok().body(list);
     }
@@ -50,7 +40,7 @@ public class CategoryResouce {
 
         dto = service.cadastrarCategory(dto);
 
-        URI uri = builder.path("/categories/{id}")
+        URI uri = builder.path("/categorias/{id}")
                 .buildAndExpand(dto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +31,9 @@ public class ProdutoService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProdutoDTO> findAllPage(PageRequest pageRequest) {
+    public Page<ProdutoDTO> findAllPage(Pageable paginacao) {
 
-        return repository.findAll(pageRequest)
+        return repository.findAll(paginacao)
                 .map(ProdutoDTO::new);
     }
 
