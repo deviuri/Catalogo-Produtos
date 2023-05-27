@@ -1,4 +1,4 @@
-package com.catalogo.services;
+package com.catalogo.servicos;
 
 import com.catalogo.Infra.exceptions.DatabaseException;
 import com.catalogo.Infra.exceptions.ResourceNotFoundException;
@@ -7,7 +7,7 @@ import com.catalogo.dto.ProdutoDTO;
 import com.catalogo.entities.Category;
 import com.catalogo.entities.Produto;
 import com.catalogo.repository.CategoryRepository;
-import com.catalogo.repository.ProdutoRepository;
+import com.catalogo.repository.ProdutosRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,10 +22,10 @@ import java.util.Optional;
 
 
 @Service
-public class ProdutoService {
+public class ProdutoServico {
 
     @Autowired
-    private ProdutoRepository repository;
+    private ProdutosRepository repository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -33,8 +33,7 @@ public class ProdutoService {
     @Transactional(readOnly = true)
     public Page<ProdutoDTO> findAllPage(Pageable paginacao) {
 
-        return repository.findAll(paginacao)
-                .map(ProdutoDTO::new);
+        return repository.findAll(paginacao).map(ProdutoDTO::new);
     }
 
     @Transactional(readOnly = true)

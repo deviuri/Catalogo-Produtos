@@ -90,6 +90,9 @@ public class Produto {
     public Set<Category> getCategorias() {
         return categorias;
     }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public int hashCode() {

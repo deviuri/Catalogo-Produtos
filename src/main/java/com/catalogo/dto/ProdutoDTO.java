@@ -5,9 +5,7 @@ import com.catalogo.entities.Category;
 import com.catalogo.entities.Produto;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ProdutoDTO {

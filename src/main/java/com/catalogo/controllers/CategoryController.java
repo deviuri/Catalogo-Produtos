@@ -1,7 +1,7 @@
-package com.catalogo.resouces;
+package com.catalogo.controllers;
 
 import com.catalogo.dto.CategoryDTO;
-import com.catalogo.services.CategoryService;
+import com.catalogo.servicos.CategoryServico;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,10 +15,10 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/categorias")
-public class CategoryResouce {
+public class CategoryController {
 
     @Autowired
-    private CategoryService service;
+    private CategoryServico service;
 
     @GetMapping
     public ResponseEntity<Page<CategoryDTO>> buscar(Pageable paginacao) {

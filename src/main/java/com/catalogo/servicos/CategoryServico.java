@@ -1,4 +1,4 @@
-package com.catalogo.services;
+package com.catalogo.servicos;
 
 import com.catalogo.Infra.exceptions.DatabaseException;
 import com.catalogo.dto.CategoryDTO;
@@ -21,7 +21,7 @@ import java.util.Optional;
 
 
 @Service
-public class CategoryService {
+public class CategoryServico {
 
     @Autowired
     private CategoryRepository repository;
