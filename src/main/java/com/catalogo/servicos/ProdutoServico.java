@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -49,11 +48,10 @@ public class ProdutoServico {
     @Transactional
     public void deletarProduto(Long id) {
         try {
-            Produto produto = repository.findById(id).get();
-            repository.delete(produto);
+            repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Produto do id: " + id + " não foi encontrado");
-        } catch (DataIntegrityViolationException | NoSuchElementException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Produto não existe em nosso Banco de Dados");
         }
     }
