@@ -22,7 +22,7 @@ public class ProdutoController {
     private ProdutoServico service;
 
     @GetMapping
-    public ResponseEntity<Page<ProdutoDTO>> buscar(Pageable paginacao) {
+    public ResponseEntity<Page<ProdutoDTO>> paginar(Pageable paginacao) {
         Page<ProdutoDTO> list = service.findAllPage(paginacao);
 
         return ResponseEntity.ok().body(list);
@@ -48,7 +48,7 @@ public class ProdutoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ProdutoDTO> editarCategoria(@PathVariable Long id, @RequestBody @Valid ProdutoDTO dto) {
-        dto = service.editarProduto(id, dto);
+        dto = service.atualizarProduto(id, dto);
 
         return ResponseEntity.ok().body(dto);
     }

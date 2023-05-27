@@ -63,7 +63,7 @@ public class ProdutoServico {
         return new ProdutoDTO(entity, entity.getCategorias());
     }
     @Transactional
-    public ProdutoDTO editarProduto(Long id, ProdutoDTO dto) {
+    public ProdutoDTO atualizarProduto(Long id, ProdutoDTO dto) {
         try {
             Produto entity = repository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
