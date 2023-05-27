@@ -29,7 +29,7 @@ public class Produto {
       name = "tb_product_category",
       joinColumns = @JoinColumn(name = "product_id"),
       inverseJoinColumns = @JoinColumn(name = "category_id"))
-    Set<Category> categorias = new HashSet<>();
+    Set<Categoria> categorias = new HashSet<>();
 
     public Produto() {
     }
@@ -87,7 +87,7 @@ public class Produto {
         this.data = data;
     }
 
-    public Set<Category> getCategorias() {
+    public Set<Categoria> getCategorias() {
         return categorias;
     }
     public void setId(Long id) {

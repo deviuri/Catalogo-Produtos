@@ -6,7 +6,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "tb_category")
-public class Category {
+public class Categoria {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,10 +18,10 @@ public class Category {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
 
-    public Category() {
+    public Categoria() {
     }
 
-    public Category(Long id, String nome) {
+    public Categoria(Long id, String nome) {
         this.id = id;
         this.nome = nome;
     }
@@ -76,7 +76,7 @@ public class Category {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Category other = (Category) obj;
+        Categoria other = (Categoria) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

@@ -4,6 +4,7 @@ import com.catalogo.Infra.exceptions.DatabaseException;
 import com.catalogo.Infra.exceptions.ResourceNotFoundException;
 import com.catalogo.dto.ProdutoDTO;
 import com.catalogo.entities.Produto;
+import com.catalogo.repository.CategoryRepository;
 import com.catalogo.repository.ProdutosRepository;
 import com.catalogo.tests.Factory;
 import org.junit.jupiter.api.Assertions;
@@ -33,6 +34,8 @@ public class ProdutoServicoTests {
     private ProdutoServico servico;
     @Mock
     private ProdutosRepository repository;
+    @Mock
+    private CategoryRepository categoryRepository;
 
     private long IdExiste;
     private long IdNaoexiste;
@@ -41,7 +44,7 @@ public class ProdutoServicoTests {
     private Produto produto;
 
     @BeforeEach
-    void setUp() throws Exception{
+    void setUp(){
         IdExiste = 1L;
         IdNaoexiste = 1000L;
         dependeId = 4L;
@@ -60,16 +63,21 @@ public class ProdutoServicoTests {
 
         when(repository.findById(IdNaoexiste)).thenReturn(Optional.empty());
 
+        doThrow(ResourceNotFoundException.class).when(repository).findById(IdNaoexiste);
+
         doNothing().when(repository).deleteById(IdExiste);
         doThrow(EmptyResultDataAccessException.class).when(repository).deleteById(IdNaoexiste);
         doThrow(DataIntegrityViolationException.class).when(repository).deleteById(dependeId);
     }
+
+
+
     @Test
     public void findAllDeveRetornaUmaPagina(){
         Pageable pageable = PageRequest.of(0,10);
 
         Page<ProdutoDTO> resultado = servico.findAllPage(pageable);
-        
+
         Assertions.assertNotNull(resultado);
         verify(repository, times(1)).findAll(pageable);
     }
@@ -84,6 +92,15 @@ public class ProdutoServicoTests {
         verify(repository, times(1)).deleteById(dependeId);
     }
 
+    @Test
+    public void DeveLancarResouceNotFoundExceptionQuandoNaoExistir(){
+
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            servico.buscarPorId(IdNaoexiste);
+        });
+
+        verify(repository, times(1)).findById(IdNaoexiste);
+    }
     @Test
     public void DeveLancarResouceNotFoundExceptionQuandoNaoExistirId(){
 

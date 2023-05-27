@@ -2,9 +2,9 @@ package com.catalogo.servicos;
 
 import com.catalogo.Infra.exceptions.DatabaseException;
 import com.catalogo.Infra.exceptions.ResourceNotFoundException;
-import com.catalogo.dto.CategoryDTO;
+import com.catalogo.dto.CategoriaDTO;
 import com.catalogo.dto.ProdutoDTO;
-import com.catalogo.entities.Category;
+import com.catalogo.entities.Categoria;
 import com.catalogo.entities.Produto;
 import com.catalogo.repository.CategoryRepository;
 import com.catalogo.repository.ProdutosRepository;
@@ -82,8 +82,8 @@ public class ProdutoServico {
         entity.setImgUrl(dto.getImgUrl());
 
         entity.getCategorias().clear();
-        for (CategoryDTO catDto : dto.getCategorias()) {
-            Category category = categoryRepository.getReferenceById(catDto.getId());
+        for (CategoriaDTO catDto : dto.getCategorias()) {
+            Categoria category = categoryRepository.getReferenceById(catDto.getId());
             entity.getCategorias().add(category);
         }
     }

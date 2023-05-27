@@ -1,7 +1,7 @@
 package com.catalogo.dto;
 
 
-import com.catalogo.entities.Category;
+import com.catalogo.entities.Categoria;
 import com.catalogo.entities.Produto;
 
 import java.time.Instant;
@@ -17,7 +17,7 @@ public class ProdutoDTO {
     private String imgUrl;
     private Instant data;
 
-    private Set<CategoryDTO> categorias = new HashSet<>();
+    private Set<CategoriaDTO> categorias = new HashSet<>();
 
     public ProdutoDTO() {
     }
@@ -40,9 +40,9 @@ public class ProdutoDTO {
         this.data = entity.getData();
     }
 
-    public ProdutoDTO(Produto entity, Set<Category> categorias) {
+    public ProdutoDTO(Produto entity, Set<Categoria> categorias) {
         this(entity);
-        categorias.forEach(categoria -> this.categorias.add(new CategoryDTO(categoria)));
+        categorias.forEach(categoria -> this.categorias.add(new CategoriaDTO(categoria)));
     }
 
     public Long getId() {
@@ -89,7 +89,7 @@ public class ProdutoDTO {
         this.data = data;
     }
 
-    public Set<CategoryDTO> getCategorias() {
+    public Set<CategoriaDTO> getCategorias() {
         return categorias;
     }
 }

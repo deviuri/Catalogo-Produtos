@@ -1,8 +1,8 @@
 package com.catalogo.servicos;
 
 import com.catalogo.Infra.exceptions.DatabaseException;
-import com.catalogo.dto.CategoryDTO;
-import com.catalogo.entities.Category;
+import com.catalogo.dto.CategoriaDTO;
+import com.catalogo.entities.Categoria;
 import com.catalogo.repository.CategoryRepository;
 import com.catalogo.Infra.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,33 +27,33 @@ public class CategoryServico {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public Page<CategoryDTO> findAllPage(Pageable paginacao) {
+    public Page<CategoriaDTO> findAllPage(Pageable paginacao) {
 
         return repository.findAll(paginacao)
-                .map(CategoryDTO::new);
+                .map(CategoriaDTO::new);
     }
 
     @Transactional(readOnly = true)
-    public CategoryDTO buscarPorId(Long id) {
-        Optional<Category> ct = repository.findById(id);
-        Category category = ct.orElseThrow(() -> new ResourceNotFoundException("Item não encontrado"));
+    public CategoriaDTO buscarPorId(Long id) {
+        Optional<Categoria> ct = repository.findById(id);
+        Categoria category = ct.orElseThrow(() -> new ResourceNotFoundException("Item não encontrado"));
 
-        return new CategoryDTO(category);
+        return new CategoriaDTO(category);
     }
 
     @Transactional
-    public CategoryDTO cadastrarCategory(CategoryDTO dto) {
-        Category category = new Category();
+    public CategoriaDTO cadastrarCategory(CategoriaDTO dto) {
+        Categoria category = new Categoria();
         category.setNome(dto.getNome());
         category = repository.save(category);
 
-        return new CategoryDTO(category);
+        return new CategoriaDTO(category);
     }
 
     @Transactional
     public void deletarCategory(Long id) {
         try {
-            Category category = repository.findById(id).get();
+            Categoria category = repository.findById(id).get();
             repository.delete(category);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Item do id: " + id + " não foi encontrado");
@@ -65,12 +65,12 @@ public class CategoryServico {
     }
 
     @Transactional
-    public CategoryDTO editarCategory(Long id, CategoryDTO dto) {
+    public CategoriaDTO editarCategory(Long id, CategoriaDTO dto) {
         try {
-            Category category = repository.findById(id).get();
+            Categoria category = repository.findById(id).get();
             category.setNome(dto.getNome());
 
-            return new CategoryDTO(category);
+            return new CategoriaDTO(category);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Item do id: " + id + " não foi encontrado");
         }

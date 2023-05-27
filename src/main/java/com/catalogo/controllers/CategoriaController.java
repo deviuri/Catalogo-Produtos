@@ -1,6 +1,6 @@
 package com.catalogo.controllers;
 
-import com.catalogo.dto.CategoryDTO;
+import com.catalogo.dto.CategoriaDTO;
 import com.catalogo.servicos.CategoryServico;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,28 +15,28 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/categorias")
-public class CategoryController {
+public class CategoriaController {
 
     @Autowired
     private CategoryServico service;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> buscar(Pageable paginacao) {
-        Page<CategoryDTO> list = service.findAllPage(paginacao);
+    public ResponseEntity<Page<CategoriaDTO>> buscar(Pageable paginacao) {
+        Page<CategoriaDTO> list = service.findAllPage(paginacao);
 
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> buscarPorId(@PathVariable Long id) {
-        CategoryDTO category = service.buscarPorId(id);
+    public ResponseEntity<CategoriaDTO> buscarPorId(@PathVariable Long id) {
+        CategoriaDTO category = service.buscarPorId(id);
 
         return ResponseEntity.ok().body(category);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<CategoryDTO> cadastrarCategoria(@RequestBody @Valid CategoryDTO dto, UriComponentsBuilder builder) {
+    public ResponseEntity<CategoriaDTO> cadastrarCategoria(@RequestBody @Valid CategoriaDTO dto, UriComponentsBuilder builder) {
 
         dto = service.cadastrarCategory(dto);
 
@@ -56,8 +56,8 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<CategoryDTO> deletarCategoria(@PathVariable Long id, @RequestBody @Valid CategoryDTO dto) {
-        CategoryDTO category = service.editarCategory(id, dto);
+    public ResponseEntity<CategoriaDTO> deletarCategoria(@PathVariable Long id, @RequestBody @Valid CategoriaDTO dto) {
+        CategoriaDTO category = service.editarCategory(id, dto);
 
         return ResponseEntity.ok().body(category);
     }
