@@ -9,12 +9,16 @@ import java.time.Instant;
 public class Factory {
     public static Produto criarProduto(){
         Produto produto = new Produto(1L, "Phone", "Good Phone", 800.0, "https://img.com/img.png", Instant.now());
-        produto.getCategorias().add(new Categoria(2L, "Eletronics"));
+        produto.getCategorias().add(criarCategoria());
         return produto;
     }
 
     public static ProdutoDTO criarProdutoDTO(){
         Produto produto = criarProduto();
         return new ProdutoDTO(produto, produto.getCategorias());
+    }
+
+    public static Categoria criarCategoria(){
+        return new Categoria(1L, "Eletronics");
     }
 }
