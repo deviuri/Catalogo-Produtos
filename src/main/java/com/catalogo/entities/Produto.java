@@ -2,14 +2,12 @@ package com.catalogo.entities;
 
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
-@EqualsAndHashCode(of = "id")
 public class Produto {
 
     @Id
@@ -34,11 +32,11 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String descricao, Double price, String imgUrl, Instant date) {
+    public Produto(Long id, String nome, String descricao, Double preco, String imgUrl, Instant date) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.preco = price;
+        this.preco = preco;
         this.imgUrl = imgUrl;
         this.data = date;
     }

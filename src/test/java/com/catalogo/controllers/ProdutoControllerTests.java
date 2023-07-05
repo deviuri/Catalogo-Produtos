@@ -78,7 +78,7 @@ public class ProdutoControllerTests {
     @Test
     public void DeveRetornaNocontentQuandoExistir() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/produtos/{id}", id))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/produtos/{id}", id).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
