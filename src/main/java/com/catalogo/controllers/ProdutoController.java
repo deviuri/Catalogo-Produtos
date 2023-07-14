@@ -15,7 +15,6 @@ import java.net.URI;
 
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/produtos")
 public class ProdutoController {
 

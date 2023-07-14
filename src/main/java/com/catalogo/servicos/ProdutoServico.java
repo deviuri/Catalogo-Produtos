@@ -1,6 +1,7 @@
 package com.catalogo.servicos;
 
 import com.catalogo.Infra.exceptions.DatabaseException;
+import com.catalogo.Infra.exceptions.NoSuchElementException;
 import com.catalogo.Infra.exceptions.ResourceNotFoundException;
 import com.catalogo.dto.CategoriaDTO;
 import com.catalogo.dto.ProdutoDTO;
@@ -51,7 +52,7 @@ public class ProdutoServico {
             repository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Produto do id: " + id + " não foi encontrado");
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException | NoSuchElementException e) {
             throw new DatabaseException("Produto não existe em nosso Banco de Dados");
         }
     }
@@ -70,7 +71,9 @@ public class ProdutoServico {
             entity = repository.save(entity);
             return new ProdutoDTO(entity, entity.getCategorias());
         } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Produto do id: " + id + ", não foi encontrado");
+            throw new ResourceNotFoundException("Item do id: " + id + " não foi encontrado");
+        } catch (DataIntegrityViolationException | java.util.NoSuchElementException e) {
+            throw new DatabaseException("Violação de integridade");
         }
     }
 

@@ -15,7 +15,6 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/categorias")
-@CrossOrigin(origins = "http://localhost:3000")
 public class CategoriaController {
 
     @Autowired

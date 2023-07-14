@@ -57,9 +57,7 @@ public class CategoryServico {
             repository.delete(category);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Item do id: " + id + " não foi encontrado");
-        } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException("Violação de integridade");
-        } catch (NoSuchElementException e) {
+        } catch (DataIntegrityViolationException | NoSuchElementException e) {
             throw new DatabaseException("Violação de integridade");
         }
     }

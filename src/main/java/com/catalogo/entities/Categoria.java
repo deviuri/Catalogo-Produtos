@@ -3,6 +3,8 @@ package com.catalogo.entities;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -17,8 +19,13 @@ public class Categoria {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
+    @ManyToMany(mappedBy = "categorias")
+    private Set<Produto> produtos = new HashSet<>();
 
     public Categoria() {
+    }
+    public Set<Produto> getProdutos() {
+        return produtos;
     }
 
     public Categoria(Long id, String nome) {
