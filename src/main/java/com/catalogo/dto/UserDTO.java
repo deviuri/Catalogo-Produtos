@@ -1,41 +1,38 @@
-package com.catalogo.entities;
+package com.catalogo.dto;
 
+import com.catalogo.entities.Role;
+import com.catalogo.entities.User;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-@Entity
-@Table(name = "tb_user")
-public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
+
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tb_user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
 
-    public User() {
+    Set<RoleDTO> roles = new HashSet<>();
+
+    public UserDTO() {
     }
 
-    public User(String firstName, String lastName, String email, String password) {
+    public UserDTO(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public UserDTO(User user) {
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        email = user.getLastName();
+        user.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
     }
+
 
     public Long getId() {
         return id;
@@ -69,19 +66,15 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public Set<RoleDTO> getRoles() {
+        return roles;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
+        if (!(o instanceof UserDTO)) return false;
+        UserDTO user = (UserDTO) o;
         return Objects.equals(id, user.id);
     }
 
