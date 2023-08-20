@@ -5,6 +5,7 @@ import com.catalogo.Infra.exceptions.NoSuchElementException;
 import com.catalogo.Infra.exceptions.ResourceNotFoundException;
 import com.catalogo.dto.RoleDTO;
 import com.catalogo.dto.UserDTO;
+import com.catalogo.dto.UserInsertDTO;
 import com.catalogo.entities.Role;
 import com.catalogo.entities.User;
 import com.catalogo.repository.RoleRepository;
@@ -15,14 +16,19 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 
 @Service
 public class UserServico {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository repository;
@@ -32,8 +38,9 @@ public class UserServico {
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAllPage(Pageable paginacao) {
+        Page<User> user = repository.findAll(paginacao);
 
-        return repository.findAll(paginacao).map(UserDTO::new);
+        return user.map(UserDTO::new);
     }
 
     @Transactional(readOnly = true)
@@ -57,9 +64,10 @@ public class UserServico {
         }
     }
     @Transactional
-    public UserDTO cadastrarUser(UserDTO dto) {
+    public UserDTO cadastrarUser(UserInsertDTO dto) {
         User user = new User();
         copyDtoToEntity(dto, user);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user = repository.save(user);
         return new UserDTO(user);
     }
